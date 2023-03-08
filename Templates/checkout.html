@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+    <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <a href="cart.html"></a> <strong class="text-black">Checkout</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section">
+      <div class="container">
+        <h2 class="h3 mb-3 text-black">Address</h2>
+        <div class="row mb-5 border p-4 rounded">
+          {% for i in context %}
+          <div class="col-md-4">
+            <div class="" role="alert">
+              <div class="text-black">
+                <p><b>{{i.name}}</b></p>
+                <p>{{i.housename}},{{i.city}},PIN:{{i.zipcode}}</p>
+                <a href="{% url 'updateaddress' id=i.id %}"><input type="button" value="Edit" class="btn btn-light btn-sm"></a>
+                <a href="{% url 'deleteaddress' %}?uid={{i.id}}"><input type="button" value="Delete" class="btn btn-dark btn-sm"></a>
+
+                {% if i.selected %}
+                <a href="{% url 'address_select' %}?uid={{i.id}}"><input type="button" value="Selected" class="btn btn-link btn-sm"></a>
+                {% else %}
+                <a href="{% url 'address_select' %}?uid={{i.id}}"><input type="button" value="Select" class="btn btn-link btn-sm"></a>
+                {% endif %}
+
+              </div>
+             
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-5 mb-md-0">
+            <h2 class="h3 mb-3 text-black">Add New</h2>
+            <form method="post">
+              {% csrf_token %}
+            <div class="p-3 p-lg-5 border">
+
+              {% for fm in fm %}
+              <div class="form-group row">
+                <div class="col-md-12">
+                      {{fm.label_tag}}{{fm}} <small class="text-danger">{{fm.errors|striptags}}</small>
+                  </div>
+                </div>
+              {% endfor %}
+
+
+              <br>
+              <div class="form-group">
+                <button class="btn btn-primary btn-lg py-3 btn-block" type="submit" name="addressform">Add Address</button>
+              </div>
+             
+            </div>
+            </form>
+          </div>
+          <div class="col-md-6">
+            <div class="row mb-5">
+              <div class="col-md-12">
+                <h2 class="h3 mb-3 text-black">Coupon Code</h2>
+                <div class="p-3 p-lg-5 border">
+                  
+                  <label for="c_code" class="text-black mb-3">Enter your coupon code if you have one</label>
+                  <form method="post">
+                    {% csrf_token %}
+                  <div class="input-group w-75">
+                    <input type="text" class="form-control" name="c_code" id="c_code" placeholder="Coupon Code" aria-label="Coupon Code" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary btn-sm" type="submit" id="button-addon2" name="couponform">Apply</button>    
+                    </div>     
+                  </div><br>
+                  {% if coup.applied %}
+                  <div>
+                  <p class="badge badge-info">{{ coup.coupon_code }} <a href="{% url 'cancelcoupon' %}" class="btn btn-danger">X</a></p>
+                  
+                  </div>
+
+                  {% endif %}
+      
+                </form>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row mb-5">
+              <div class="col-md-12">
+                <h2 class="h3 mb-3 text-black">Your Order</h2>
+                <div class="p-3 p-lg-5 border">
+                  <table class="table site-block-order-table mb-5">
+                    <thead>
+                      <th>Product</th>
+                      <th>Total</th>
+                    </thead>
+                    <tbody>
+                      {% for i in data %}
+                      <tr>
+                        <td>{{i.product}} <strong class="mx-2">x</strong> {{i.quantity}}</td>
+                        <td>₹ {{i.subtotal}}</td>
+                      </tr>
+                      {% endfor %}
+
+                      <tr>
+                        <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
+                        <td class="text-black">₹ {{datap.total}}</td>
+                      </tr>
+                      {% if coup.applied %}
+                      <tr>
+                        <td class="text-black font-weight-bold"><strong>Coupon Discount</strong></td>
+                        <td class="text-black">₹ {{ coup.discount_price }}</td>
+                      </tr>
+                      {% endif %}
+                      
+                      <tr>
+                        <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+                        {% if coup.applied %}
+                        <td class="text-black font-weight-bold"><strong>₹ {{disc}}</strong></td>
+                        {% else %}
+                        <td class="text-black font-weight-bold"><strong>₹ {{datap.total}}</strong></td>
+                        {% endif %}
+                      </tr>
+                    </tbody>
+                  </table>
+ 
+
+                  <div class="form-group">
+                    
+                    <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='{% url 'orderconfirm' %}'">Cash on delivery</button><br>
+         
+                    <script src="https://www.paypal.com/sdk/js?client-id=AZaPN7_Fio6OvIK3JhE0xGlshCED-Zgi2TM4ubK7-Yqq_b3N2HbZEKfzltaqaUxpevu_Y9OSohlHuIK5&currency=USD&disable-funding=credit"></script>
+                    <form action="{% url 'paypal' %}" id="paypalform" name="paypalform">
+                      <div id="paypal-button-container"></form></div>
+
+                      <script>
+                        var amount = '{{datap.total}}'
+                        // Render the PayPal button into #paypal-button-container
+                        paypal.Buttons({
+        
+                          style : {
+                                  color:'blue',
+                                  
+                          },
+        
+                            createOrder: (data, actions) => {
+                            return actions.order.create({
+                              purchase_units: [{
+                                amount: {
+                                  value: amount, // Can also reference a variable or function
+                                }
+                              }]
+                            });
+                          },
+                
+                            // Finalize the transaction
+                            onApprove: function(data, actions) {
+                                return actions.order.capture().then(function(orderData) {
+                                    // Successful capture! For demo purposes:
+                                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                                    var transaction = orderData.purchase_units[0].payments.captures[0];
+                                    alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+                                    document.getElementById('paypalform').submit()
+                
+                                    // Replace the above to show a success message within this page, e.g.
+                                    // const element = document.getElementById('paypal-button-container');
+                                    // element.innerHTML = '';
+                                    // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                                    // Or go to another URL:  actions.redirect('thank_you.html');
+                                });
+                            }
+                
+                
+                        }).render('#paypal-button-container');
+                      </script>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- </form> -->
+      </div>
+    </div>
+
+    {% endblock %}

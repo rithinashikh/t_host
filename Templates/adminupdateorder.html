@@ -1,0 +1,80 @@
+{% extends "adminbase.html" %}
+{% load static %}
+{% block active7 %} "active" {% endblock%}
+{% block tablewrapper %}
+                    
+                    <div class="col-sm-6">
+						<h2>Update Order</h2>
+					</div>
+                    <div class="col-sm-6">
+                        
+    
+                      </div>
+                    </div>
+
+                    
+{% endblock %}
+{% block tablecontent%}
+<form method="post" enctype="multipart/form-data" style="width:300px; margin-left:400px; margin-top:100px; margin-bottom:100px;">
+  <!-- Email input -->
+  {% csrf_token %}
+  
+
+  {{fm.as_p}}
+  <button type="submit" class="btn btn-primary btn-block" style="margin-top:30px">Update Order</button>
+</div>
+
+  
+
+
+  
+</form>
+   
+
+<!--
+<form method="post" enctype="multipart/form-data" style="width:300px; margin-left:400px; margin-top:100px; margin-bottom:100px;">
+    
+    {% csrf_token %}
+    <div class="form-outline mb-4">
+    <label class="form-label" for="form2Example1">Product Name</label>
+      <input type="text" id="form2Example1" class="form-control" name="name" />
+    </div>
+  
+    
+    <div class="form-outline mb-4">
+      <label class="form-label" for="form2Example2">Price</label>
+      <input type="text" id="form2Example2" class="form-control" name="price" />
+    </div>
+    <div class="form-outline mb-4">
+        <label class="form-label" for="form2Example2">Description</label>
+        <input type="text" id="form2Example2" class="form-control"  name="description" />
+    </div>
+    <div class="form-outline mb-4">
+        <label class="form-label" for="form2Example2">Image</label>
+        <input type="file" id="form2Example2" class="form-control" name="image" />
+    </div>
+    <label for="exampleFormControlSelect1">Category</label>
+    <select class="form-control" id="exampleFormControlSelect1" name="category">
+      <option>Wired</option>
+      <option>Wireless</option>
+    </select>
+  
+  
+    <div class="row mb-4">
+      <div class="col d-flex justify-content-center">
+
+      </div>
+  
+      <div class="col">
+
+      </div>
+    </div>
+  
+
+    <button type="submit" class="btn btn-primary btn-block" style="margin-top:30px">Edit Product</button>
+  
+
+    
+  </form>-->
+                
+{% endblock %}

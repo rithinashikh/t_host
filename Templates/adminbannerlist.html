@@ -1,0 +1,61 @@
+{% extends "adminbase.html" %}
+{% block active10 %} "active" {% endblock%}
+{% block tablewrapper %}
+                    
+                    <div class="col-sm-6">
+						<h2>Manage <b>Banner</b></h2>
+					</div>
+                    <div class="col-sm-6">
+                        <a href="{% url 'adminaddcoupon' %}" class="btn" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span></span></a>
+    
+                      </div>
+                    </div>
+
+                    
+{% endblock %}
+
+
+{% block tablecontent%}
+                <form action="{% url 'admincouponlist' %}" class="d-flex offset-md-1 container m-auto" style="width:1100px">
+                    <input class="form-control offset-md-1" type="search" placeholder="Search Banner" name="search" aria-label="Search"><br>
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </form>
+                <table class="table table-striped table-hover">
+                
+                <thead>
+                    <tr>
+                    
+
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Image</th>
+                        <th>Action</th>
+
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for x in member %}
+                    <tr>
+                        <td>{{ x.id }}</td>   
+                        <td>{{ x.name }}</td>                      
+                        <td>{{ x.image.url }}</td>                
+                        <td>
+                           <a href="{% url 'updatebanner' %}?uid={{x.id}}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                        </td> 
+                        <!--
+                        <td>
+                            <a href="{% url 'deletecoupon' %}?uid={{x.id}}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        </td>-->
+                    
+                    </tr>
+                    
+                    {% endfor %}
+  
+                </tbody>
+                </table>
+
+
+                
+{% endblock %}
+

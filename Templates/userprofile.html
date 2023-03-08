@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+    <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0"><a href="{% url 'index' %}">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">User Profile</strong></div>
+        </div>
+      </div>
+    </div>
+ <!--
+-->
+    <div class="site-section">
+      <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <img src="{{profile.uimage.url}}" alt="avatar"
+              class="rounded-circle img-fluid" style="width: 150px;">
+            <h5 class="my-3 text-black">{{profile.uname}}</h5>
+            <p class="text-muted mb-1">{{profile.uemail}}</p>
+            
+            <p class="text-muted mb-4">{{profile.uphone}}</p>
+            
+
+          
+            <div class="d-flex justify-content-center mb-2">
+              <a href="{% url 'changepassword' %}">
+              <button type="button" class="btn btn-outline-primary btn-sm ms-1" style="margin-left:10px">Change Password</button>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!--
+        <div class="card mb-4 mb-lg-0">
+          
+
+          
+        </div>-->
+        
+      </div>
+      <div class="col-lg-8">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-black">Full Name</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{profile.uname}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-black">Email</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{profile.uemail}}</p>
+              </div>
+            </div>
+            <hr>
+
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0 text-black">Mobile</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">(+91) {{profile.uphone}}</p>
+              </div>
+            </div>
+            
+            {% for i in address %}
+            <hr>
+            <div class="row">
+              
+              <div class="col-sm-3">
+                <p class="mb-0 text-black">Address</p>
+              </div>
+              
+              <div class="col-sm-8">
+                <p class="text-muted mb-0">{{i.name}}, {{i.locality}} , {{i.city}} , {{i.zipcode}}</p>
+              </div>
+              <div class="col-sm-1">
+                <a href="{% url 'updateprofileaddress' id=i.id %}">Edit </a>
+              </div>
+              
+            </div>
+            {% endfor %}
+          </div>
+          <div class="d-flex  mb-2" style="margin-left:200px">
+            <a href="{% url 'edituserprofile' %}">
+              <button type="button" class="btn btn-primary btn-sm">Edit Details</button>
+            </a>
+            <a href="{% url 'addprofileaddress' %}">
+              <button type="button" class="btn btn-btn-outline-primary btn-sm">Add Address</button>
+            </a>
+
+          </div>
+          <!--
+          <div class="d-flex mb-2">
+            <a href="{% url 'addprofileaddress' %}">
+            <button type="button" class="btn btn-outline-primary btn-sm ms-1" style="margin-left:10px">Add address</button>
+            </a>
+          </div>
+          -->
+        </div>
+        
+        <!--
+        -->
+      </div>
+    </div>
+  </div>
+</div>
+
+  {% endblock %}
+

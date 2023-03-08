@@ -1,0 +1,80 @@
+{% extends "adminbase.html" %}
+{% block active2 %} "active" {% endblock%}
+{% block tablewrapper %}
+                    
+                    <div class="col-sm-6">
+						<h2>Manage <b>Users</b></h2>
+					</div>
+                    <div class="col-sm-6">
+                        <!--
+                        <a href="" class="btn" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add User</span></a>
+                        -->
+                      </div>
+                    </div>
+
+                    
+{% endblock %}
+
+
+{% block tablecontent%}
+                <form action="{% url 'adminuserlist' %}" class="d-flex offset-md-1 container m-auto" style="width:1100px">
+                    <input class="form-control offset-md-1" type="search" placeholder="Search Username" name="search" aria-label="Search"><br>
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </form>
+                <table class="table table-striped table-hover">
+                
+                <thead>
+                    <tr>
+                    
+
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Photo</th>
+                        <th>Block/Unblock</th>
+
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for x in page_obj %}
+                    <tr>
+                        <td>{{ x.id }}</td>                         
+                        <td>{{ x.uname }}</td>
+                        <td>{{ x.uemail }}</td>
+                        <td>{{ x.uphone }}</td>
+                        <td><img src="{{ x.uimage.url }}" height="30px"></td>
+						<td>
+                            {% if x.uactive %}
+                                <a href="{% url 'userblock' %}?uid={{x.id}}" class="btn btn-danger md-sm my-link3"><span style="color:white">Block</span></a>
+                            {% else %}
+                                <a href="{% url 'userblock' %}?uid={{x.id}}" class="btn btn-success md-sm my-link4"><span style="color:white">Unblock</span></a>
+                            {% endif %}
+                            </td>
+                    
+                    </tr>
+                    {% endfor %}
+  
+                </tbody>
+                </table>
+                                                <!-- Display pagination links -->
+                                                <div class="pagination">
+                                                    <span class="step-links">
+                                                        {% if page_obj.has_previous %}
+                                                            <a href="?page=1">&laquo; first</a>
+                                                            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                                                        {% endif %}
+                            
+                                                        <span class="current-page">
+                                                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                                                        </span>
+                            
+                                                        {% if page_obj.has_next %}
+                                                            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                                                            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                                                        {% endif %}
+                                                    </span>
+                                                </div>
+                
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "adminbase.html" %}
+{% load static %}
+{% block active4 %} "active" {% endblock%}
+{% block tablewrapper %}
+                    
+                    <div class="col-sm-6">
+						<h2>Products</h2>
+					</div>
+                    <div class="col-sm-6">
+                        
+    
+                      </div>
+                    </div>
+
+                    
+{% endblock %}
+{% block tablecontent%}
+                
+<form method="post" enctype="multipart/form-data" style="width:300px; margin-left:400px; margin-top:100px; margin-bottom:100px;">
+    <!-- Email input -->
+    {% csrf_token %}
+    
+    {% for fm in fm %}
+    <div class="form-group row">
+      <div class="col-md-12">
+            {{fm.label_tag}}{{fm}} <small class="text-danger">{{fm.errors|striptags}}</small>
+        </div>
+      </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary btn-block" style="margin-top:30px">Add Product</button>
+  </div>
+
+    
+  
+
+    
+  </form>
+                
+{% endblock %}

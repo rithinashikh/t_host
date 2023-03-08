@@ -1,0 +1,81 @@
+{% extends "adminbase.html" %}
+{% load static %}
+{% block active1 %} "active" {% endblock%}
+{% block tablewrapper %}
+                    
+                    <div class="col-sm-6">
+						<h2>Sales</h2>
+					</div>
+                    <div class="col-sm-6">
+                        
+    
+                      </div>
+                    </div>
+
+                    
+{% endblock %}
+{% block tablecontent%}
+                
+                <thead>
+                    <!--
+                    <tr>
+                    
+                        
+                        <th><img src="{% static 'dash1.jpg' %}" width="540px"></th>
+                        <th><img src="{% static 'dash2.jpg' %}" width="540px">></th>
+                       
+                    </tr> -->
+                    
+                        <!-- chart -->
+
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                        <div class="container-fluid pt-4 px-4">
+                            <div class="row g-4">
+                                <div class="col-sm-6 col-xl-6">
+                                    <div class="bg-light text-center rounded p-4">
+                                        <h6 class="mb-0">Total Number Of product Purchased per month</h6>
+                                        <div class="d-flex align-items-center justify-content-between mb-4">
+                                            
+                        <canvas id="chart" width="200" height="200"></canvas>
+                        <script>
+                            const ctxs = document.getElementById('chart');
+                            const labels={{months|safe}}
+                        console.log(true)
+                            new Chart(ctxs, {
+                            type: 'doughnut',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                label: 'totalorders',
+                                data: {{total_ord}},
+                            
+                                borderColor:'black',
+                                backgroundColor:['#c0db23','#d44255','#89db37','#311436','#279e15','#edc7ca','#c49c1a','#1aa2c4','#611ac4','#ebc583','#3d89d1','#e645ff'],
+                                borderWidth: 1
+                                }]
+                            },
+
+                            options: {
+                                scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                                }
+                            }
+                            });
+                        </script>
+                        </div>
+                                                    
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+ 
+
+                </thead>
+                <tbody>
+
+  
+                </tbody>
+                
+{% endblock %}

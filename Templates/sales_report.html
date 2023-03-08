@@ -1,0 +1,53 @@
+{% extends "adminbase.html" %}
+{% load static %}
+{% block active8 %} "active" {% endblock%}
+{% block tablewrapper %}
+                    
+                    <div class="col-sm-6">
+						<h2>Sales Report</h2>
+					</div>
+                    <div class="col-sm-6">
+                        
+    
+                      </div>
+                    </div>
+
+                    
+{% endblock %}
+{% block tablecontent%}
+        
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th><h3 class=" col-md-12 mb-7 ">Select Date</h3></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <form  method="POST"  action="{% url 'sales_report'%}" >
+              
+                {% csrf_token %}
+                  <tr>
+                    <td><label for="start_date" style="color: black;" >Start Date:</label></td>
+                    <td><input type="date" id="start_date" class="date " name="start_date"><br/></td>
+                  </tr>
+                  <tr>
+                    <td><label for="end_date" style="color: black;" >End Date:</label></td>
+                    <td><input type="date" id="end_date" class="date" name="end_date"></td>
+                  </tr>
+                  <tr></tr>
+                  <tr>
+                    <td>
+                      <button type="submit" formtarget="_blank" name ="generate" class="btn btn-outline-dark" value="PDF"><i class="fas fa-file-export"></i> Download Report</button>
+                    </td>
+                  </tr>
+            </form>
+          <tbody>
+          </table>
+        
+
+ 
+
+
+
+          {% endblock  %}

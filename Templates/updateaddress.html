@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+    <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <a href="cart.html">Cart</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Checkout</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section">
+      <div class="container">
+        <h2 class="h3 mb-3 text-black">Address</h2>
+        <div class="row mb-5 border p-4 rounded">
+          {% for i in context %}
+          <div class="col-md-4">
+            <div class="" role="alert">
+                <div class="text-black">
+                    <p><b>{{i.name}}</b></p>
+                    <p>{{i.housename}},{{i.city}},PIN:{{i.zipcode}}</p>
+                    <a href="{% url 'updateaddress' id=i.id %}"><input type="button" value="Edit" class="btn btn-light btn-sm"></a>
+                    <a href="{% url 'deleteaddress' %}?uid={{i.id}}"><input type="button" value="Delete" class="btn btn-dark btn-sm"></a>
+    
+                    {% if i.selected %}
+                    <a href="{% url 'address_select' %}?uid={{i.id}}"><input type="button" value="Selected" class="btn btn-link btn-sm"></a>
+                    {% else %}
+                    <a href="{% url 'address_select' %}?uid={{i.id}}"><input type="button" value="Select" class="btn btn-link btn-sm"></a>
+                    {% endif %}
+    
+                </div>
+             
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-5 mb-md-0">
+            <h2 class="h3 mb-3 text-black">Add New</h2>
+            <form method="post">
+              {% csrf_token %}
+            <div class="p-3 p-lg-5 border">
+              <div class="form-group">
+                {{fm.as_p}}
+              </div>
+              <br>
+              <div class="form-group">
+                <button class="btn btn-primary btn-lg py-3 btn-block" type="submit">Update Address</button>
+              </div>
+             
+            </div>
+            </form>
+          </div>
+          <div class="col-md-6">
+
+            
+            <div class="row mb-5">
+              <div class="col-md-12">
+                <h2 class="h3 mb-3 text-black">Your Order</h2>
+                <div class="p-3 p-lg-5 border">
+                  <table class="table site-block-order-table mb-5">
+                    <thead>
+                      <th>Product</th>
+                      <th>Total</th>
+                    </thead>
+                    <tbody>
+                      {% for i in data %}
+                      <tr>
+                        <td>{{i.product}} <strong class="mx-2">x</strong> {{i.quantity}}</td>
+                        <td>₹ {{i.subtotal}}</td>
+                      </tr>
+                      {% endfor %}
+
+                      <tr>
+                        <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
+                        <td class="text-black">₹ {{datap.total}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+                        <td class="text-black font-weight-bold"><strong>₹ {{datap.total}}</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+ 
+                <!--
+
+                  -->
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- </form> -->
+      </div>
+    </div>
+
+    {% endblock %}
